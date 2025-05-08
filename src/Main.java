@@ -17,32 +17,33 @@
                 System.out.println("5 - Atualizar a quantidade do produto");
                 System.out.println("0 - Sair");
 
-                System.out.print("Digite sua opção: ");
+                System.out.println("Digite sua opção: ");
                 opcao = entrada.nextInt();
                 entrada.nextLine(); // limpa o buffer do nextInt anterior
 
                 switch (opcao) {
                     case 1:
-                        System.out.print("Nome do produto: ");
+                        System.out.println("Nome do produto: ");
                         String nomeProduto = entrada.nextLine().trim();
 
                         sl.buscarProduto(nomeProduto);
                         break;
                     case 2:
-                        System.out.print("Nome do produto: ");
+                        System.out.println("Nome do produto: ");
                         String nome = entrada.nextLine().trim();
 
-                        System.out.print("Preço: ");
+                        System.out.println("Preço: ");
                         double preco = entrada.nextDouble();
 
-                        System.out.print("Quantidade: ");
+                        System.out.println("Quantidade: ");
                         int quantidade = entrada.nextInt();
 
                         Produto novoProduto = new Produto(nome, preco, quantidade);
                         sl.adicionarProduto(novoProduto);
+                        ArquivoUtil.salvarLinha("produtos.txt", "Café;12.5;3");
                         break;
                     case 3:
-                        System.out.print("Nome do produto a ser removido: ");
+                        System.out.println("Nome do produto a ser removido: ");
                         String remocaoProduto = entrada.nextLine().trim();
 
                         sl.deletarProduto(remocaoProduto);
@@ -51,10 +52,10 @@
                         sl.listarTodos();
                         break;
                     case 5:
-                        System.out.print("Nome do produto a alterar quantidade: ");
+                        System.out.println("Nome do produto a alterar quantidade: ");
                         String nomeAl = entrada.nextLine().trim();
 
-                        System.out.print("Quantidade: ");
+                        System.out.println("Quantidade: ");
                         int quantidadeAl = entrada.nextInt();
 
                         sl.atualizarQuantidade(nomeAl, quantidadeAl);
