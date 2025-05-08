@@ -6,7 +6,9 @@ public class SistemaLoja {
 
     public SistemaLoja() {
         this.produtos = new ArrayList<>();
+        this.produtos.addAll(ArquivoUtil.carregarProdutos("produtos.txt"));
     }
+
 
     public void adicionarProduto(Produto p){ // Adicionar produto
         for (Produto existente : produtos) {
@@ -14,9 +16,11 @@ public class SistemaLoja {
                 System.out.println("Produto já existe.");
                 return;
             }
-            produtos.add(p);
-            System.out.println("Produto adicionado com sucesso.");
         }
+
+        produtos.add(p); // adiciona na lista em memória
+        ArquivoUtil.salvarLinha("produtos.txt", p.getNome() + ";" + p.getPreco() + ";" + p.getQuantidade());
+        System.out.println("Produto adicionado com sucesso.");
     }
 
     public void buscarProduto(String nome){ //Buscar Produto por nome
@@ -33,6 +37,7 @@ public class SistemaLoja {
         for (Produto p : produtos) {
             if (p.getNome().trim().equalsIgnoreCase(nome)) {
                 produtos.remove(p);
+                ArquivoUtil.sobrescreverArquivo("produtos.txt", produtos);
                 System.out.println("Produto removido com sucesso!");
                 return;
             }
@@ -56,7 +61,8 @@ public class SistemaLoja {
         for (Produto p : produtos) {
             if (p.getNome().trim().equalsIgnoreCase(nome)) {
                 p.setQuantidade(quantidade);
-                System.out.print("Produto alterado com sucesso!");
+                ArquivoUtil.sobrescreverArquivo("produtos.txt", produtos);
+                System.out.println("Produto alterado com sucesso!");
                 return;
             }
         }
