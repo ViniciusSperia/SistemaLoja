@@ -13,7 +13,7 @@ public class SistemaLoja {
     public void adicionarProduto(Produto p){ // Adicionar produto
         for (Produto existente : produtos) {
             if (existente.getNome().trim().equalsIgnoreCase(p.getNome().trim())) {
-                System.out.println("Produto já existe.");
+                System.out.println("Erro: já existe um produto com esse nome. Escolha outro nome ou edite o existente.");
                 return;
             }
         }
@@ -23,26 +23,24 @@ public class SistemaLoja {
         System.out.println("Produto adicionado com sucesso.");
     }
 
-    public void buscarProduto(String nome){ //Buscar Produto por nome
-        for (Produto p : produtos) {
-            if (p.getNome().trim().equalsIgnoreCase(nome)) {
-                System.out.println(p);
-                return;
-            }
+    public void buscarProduto(String nome) {
+        Produto p = encontrarProdutoPorNome(nome);
+        if (p != null) {
+            System.out.println(p);
+        } else {
+            System.out.println("Nenhum produto encontrado com o nome \"" + nome + "\". Verifique se digitou corretamente.");
         }
-        System.out.println("Produto não encontrado.");
     }
 
-    public void removerProduto(String nome){
-        for (Produto p : produtos) {
-            if (p.getNome().trim().equalsIgnoreCase(nome)) {
-                produtos.remove(p);
-                ProdutoRepositorio.sobrescrever(produtos);
-                System.out.println("Produto removido com sucesso!");
-                return;
-            }
+    public void removerProduto(String nome) {
+        Produto p = encontrarProdutoPorNome(nome);
+        if (p != null) {
+            produtos.remove(p);
+            ProdutoRepositorio.sobrescrever(produtos);
+            System.out.println("Produto removido com sucesso!");
+        } else {
+            System.out.println("Produto não encontrado.");
         }
-        System.out.println("Produto não encontrado.");
     }
 
     public void listarTodos(){
@@ -56,16 +54,28 @@ public class SistemaLoja {
             System.out.println("---------------");
         }
     }
-
     public void atualizarQuantidade(String nome, int quantidade) {
+        Produto p = encontrarProdutoPorNome(nome);
+        if (p != null) {
+            p.setQuantidade(quantidade);
+            ProdutoRepositorio.sobrescrever(produtos);
+            System.out.println("Produto alterado com sucesso!");
+        } else {
+            System.out.println("Produto não encontrado. Verifique o nome informado.");
+        }
+    }
+
+    public Produto encontrarProdutoPorNome(String nome) {
         for (Produto p : produtos) {
             if (p.getNome().trim().equalsIgnoreCase(nome)) {
-                p.setQuantidade(quantidade);
-                ProdutoRepositorio.sobrescrever(produtos);
-                System.out.println("Produto alterado com sucesso!");
-                return;
+                return p;
             }
         }
-        System.out.println("Produto não encontrado.");
+        return null;
     }
+
+    public boolean produtoExiste(String nome) {
+        return encontrarProdutoPorNome(nome) != null;
+    }
+
 }

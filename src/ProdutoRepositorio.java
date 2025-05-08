@@ -31,7 +31,7 @@ public class ProdutoRepositorio {
             String linha = p.getNome() + ";" + p.getPreco() + ";" + p.getQuantidade();
             fw.write(linha + "\n");
         } catch (IOException e) {
-            System.out.println("Erro ao salvar produto: " + e.getMessage());
+            System.out.println("Erro interno ao salvar o produto. Tente novamente.");
         }
     }
 

@@ -1,3 +1,4 @@
+    import java.util.InputMismatchException;
     import java.util.Scanner;
 
     public class Main {
@@ -5,7 +6,7 @@
            Scanner entrada = new Scanner(System.in); // Cria objeto Scanner para leitura do teclado
 
            SistemaLoja sl = new SistemaLoja();
-           int opcao;
+           int opcao = -1;
 
 
             do {
@@ -17,32 +18,43 @@
                 System.out.println("5 - Atualizar a quantidade do produto");
                 System.out.println("0 - Sair");
 
-                System.out.println("Digite sua opção: ");
-                opcao = entrada.nextInt();
-                entrada.nextLine(); // limpa o buffer do nextInt anterior
+                try {
+                    System.out.print("Digite sua opção: ");
+                    opcao = entrada.nextInt();
+                    entrada.nextLine(); // limpa buffer
+                } catch (InputMismatchException e) {
+                    System.out.println("Valor inválido. Certifique-se de digitar apenas números.");
+                    entrada.nextLine(); // limpa o lixo que ficou no buffer
+                    opcao = -1; // volta para o início do loop
+                }
 
                 switch (opcao) {
                     case 1:
-                        System.out.println("Nome do produto: ");
+                        System.out.print("Nome do produto: ");
                         String nomeProduto = entrada.nextLine().trim();
 
                         sl.buscarProduto(nomeProduto);
                         break;
                     case 2:
-                        System.out.println("Nome do produto: ");
+                        System.out.print("Nome do produto: ");
                         String nome = entrada.nextLine().trim();
 
-                        System.out.println("Preço: ");
-                        double preco = entrada.nextDouble();
+                        try {
+                            System.out.print("Preço: ");
+                            double preco = entrada.nextDouble();
 
-                        System.out.println("Quantidade: ");
-                        int quantidade = entrada.nextInt();
+                            System.out.print("Quantidade: ");
+                            int quantidade = entrada.nextInt();
 
-                        Produto novoProduto = new Produto(nome, preco, quantidade);
-                        sl.adicionarProduto(novoProduto);
+                            Produto novoProduto = new Produto(nome, preco, quantidade);
+                            sl.adicionarProduto(novoProduto);
+                        } catch (InputMismatchException e) {
+                            System.out.println("Erro: preço e quantidade devem ser números.");
+                            entrada.nextLine(); // limpa buffer
+                        }
                         break;
                     case 3:
-                        System.out.println("Nome do produto a ser removido: ");
+                        System.out.print("Nome do produto a ser removido: ");
                         String remocaoProduto = entrada.nextLine().trim();
 
                         sl.removerProduto(remocaoProduto);
@@ -51,13 +63,21 @@
                         sl.listarTodos();
                         break;
                     case 5:
-                        System.out.println("Nome do produto a alterar quantidade: ");
+                        System.out.print("Nome do produto a alterar quantidade: ");
                         String nomeAl = entrada.nextLine().trim();
 
-                        System.out.println("Quantidade: ");
-                        int quantidadeAl = entrada.nextInt();
-
-                        sl.atualizarQuantidade(nomeAl, quantidadeAl);
+                        if (sl.produtoExiste(nomeAl)) {
+                            try {
+                                System.out.println("Nova quantidade: ");
+                                int quantidadeAl = entrada.nextInt();
+                                sl.atualizarQuantidade(nomeAl, quantidadeAl);
+                            } catch (InputMismatchException e) {
+                                System.out.println("Erro: quantidade deve ser um número inteiro.");
+                                entrada.nextLine();
+                            }
+                        } else {
+                            System.out.println("Produto não encontrado.");
+                        }
                         break;
                     case 0:
                         System.out.println("Encerrando...");
