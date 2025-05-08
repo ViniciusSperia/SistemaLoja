@@ -40,13 +40,12 @@
 
                         Produto novoProduto = new Produto(nome, preco, quantidade);
                         sl.adicionarProduto(novoProduto);
-                        ArquivoUtil.salvarLinha("produtos.txt", "Café;12.5;3");
                         break;
                     case 3:
                         System.out.println("Nome do produto a ser removido: ");
                         String remocaoProduto = entrada.nextLine().trim();
 
-                        sl.deletarProduto(remocaoProduto);
+                        sl.removerProduto(remocaoProduto);
                         break;
                     case 4:
                         sl.listarTodos();
