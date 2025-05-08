@@ -26,7 +26,7 @@ public class SistemaLoja {
     public void buscarProduto(String nome){ //Buscar Produto por nome
         for (Produto p : produtos) {
             if (p.getNome().trim().equalsIgnoreCase(nome)) {
-                p.exibirInformacoes();
+                System.out.println(p);
                 return;
             }
         }
@@ -52,7 +52,7 @@ public class SistemaLoja {
         }
 
         for (Produto p : produtos) {
-            p.exibirInformacoes();
+            System.out.println(p);
             System.out.println("---------------");
         }
     }

@@ -34,11 +34,14 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    void exibirInformacoes(){
+    @Override
+    public String toString() {
+        return formatado();
+    }
 
-        System.out.println("Nome: " + getNome());
-        System.out.println("Preço: " + getPreco());
-        System.out.println("Quantidade: " + getQuantidade() + " unidades.");
-
+    public String formatado() {
+        return "Nome: " + nome + "\n" +
+                "Preço: " + preco + "\n" +
+                "Quantidade: " + quantidade + " unidades.";
     }
 }
